@@ -158,6 +158,44 @@ router.get('/api/posts/category/:category', (req, res) => {
   });
 });
 
+router.post('/api/posts', (req, res) => {
+  console.log(req.body);
+  db.Post.create({
+    title: req.body.title,
+    body: req.body.body,
+    category: req.body.category
+  }).then(dbPost => {
+    res.json(dbPost);
+  });
+});
+
+router.delete('/api/posts/:id', (req, res) => {
+  db.Post.destroy({
+    where: {
+      id: req.params.id
+    }
+  }).then(dbPost => {
+    res.json(dbPost);
+  });
+});
+
+router.put('/api/posts/:id', (req, res) => {
+  db.Post.update(
+    {
+      title: req.body.title,
+      body: req.body.body,
+      category: req.body.category
+    },
+    {
+      where: {
+        id: req.params.id
+      }
+    }
+  ).then(dbPost => {
+    res.json(dbPost);
+  });
+});
+
 Fill out the unfinished routes in `product-routes.js`, `tag-routes.js`, and `category-routes.js` to perform Create, Read, Update, and Delete operations using your Sequelize models.
 
 > **Note:** The functionality for creating the many-to-many relationship for products is already done for you.
