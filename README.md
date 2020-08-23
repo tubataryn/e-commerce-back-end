@@ -148,6 +148,16 @@ You'll need to execute association methods on your Sequelize models to create th
 
 ### Fill out the API Routes to Perform RESTful CRUD Operations
 
+router.get('/api/posts/category/:category', (req, res) => {
+  db.Post.findAll({
+    where: {
+      category: req.params.category
+    }
+  }).then(dbPost => {
+    res.json(dbPost);
+  });
+});
+
 Fill out the unfinished routes in `product-routes.js`, `tag-routes.js`, and `category-routes.js` to perform Create, Read, Update, and Delete operations using your Sequelize models.
 
 > **Note:** The functionality for creating the many-to-many relationship for products is already done for you.
