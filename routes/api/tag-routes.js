@@ -1,42 +1,57 @@
 const router = require('express').Router();
-//const { Tag, Product, ProductTag } = require('../../models');
-const db = require('../../models');
+const { Tag, Product, ProductTag } = require('../../models');
+//const db = require('../../models');
 
 // The `/api/tags` endpoint
 
 router.get('/', (req, res) => {
     // find all tags
     // be sure to include its associated Product data
-    db.Tag.findAll({}).then(dbTag => {
-      res.json(dbTag)
+    Tag.findAll({
+      attributes: [
+        'id',
+        'product_name',
+        'price',
+        'stock',
+        'category_id'
+      ]
+    }).then(Tag => {
+      res.json(Tag)
     })
 });
 
 router.get('/:id', (req, res) => {
   // find a single tag by its `id`
   // be sure to include its associated Product data
-  db.Tag.findOne({
+  Tag.findOne({
+    attributes: [
+      'id',
+      'product_name',
+      'price',
+      'stock',
+      'category_id'
+    ],
     where: {
       id: req.params.id
     }
-  }).then(dbTag => {
-    res.json(dbTag);
+  }).then(Tag => {
+    res.json(Tag);
   });
 });
 
 router.post('/', (req, res) => {
   // create a new tag
-  db.Tag.create({
+  Tag.create({
     id: req.params.id,
     tag_name: req.params.tag_name,
-  }).then(dbTag => {
-    res.json(dbTag);
+  }).then(Tag => {
+    res.json(Tag);
   });
 });
 
 router.put('/:id', (req, res) => {
   // update a tag's name by its `id` value
-  db.Tag.update(
+  Tag.update(
     {
     tag_name: req.params.tag_name
   },
@@ -44,19 +59,19 @@ router.put('/:id', (req, res) => {
     where: {
       id: req.params.id
     },
-  }).then(dbTag => {
-    res.json(dbTag);
+  }).then(Tag => {
+    res.json(Tag);
   });
 });
 
 router.delete('/:id', (req, res) => {
   // delete on tag by its `id` value
-  db.Tag.destroy({
+  Tag.destroy({
     where: {
       id: req.params.id
     }
-  }).then(dbTag => {
-    res.json(dbTag);
+  }).then(Tag => {
+    res.json(Tag);
   });
 });
 
